@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" >
+
+<xsd:simpleType name="floatList">
+	<xsd:list itemType="xsd:float" />
+</xsd:simpleType>
+
+<xsd:simpleType name="nonNegInteger">
+	<xsd:restriction base="xsd:integer">
+		<xsd:minInclusive value="0" />
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="nonNegFloat">
+	<xsd:restriction base="xsd:float">
+		<xsd:minInclusive value="0" />
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="percentFloat">
+	<xsd:restriction base="xsd:float">
+		<xsd:minInclusive value="0" />
+		<xsd:maxInclusive value="1" />
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:complexType name="hiddenType">
+	<xsd:attribute name="number" type="nonNegInteger" />
+	<xsd:attribute name="weights" type="floatList" />
+</xsd:complexType>
+
+<xsd:complexType name="outputType">
+	<xsd:attribute name="name" type="xsd:string" />
+	<xsd:attribute name="value" type="percentFloat" />
+	<xsd:attribute name="weights" type="floatList"/>
+</xsd:complexType>
+
+
+<xsd:complexType name="sensorInputType">
+	<xsd:attribute name="name" type="xsd:string" />
+	<xsd:attribute name="value" type="nonNegFloat"/>
+</xsd:complexType>
+
+<xsd:complexType name="crewInputType">
+	<xsd:attribute name="name" type="xsd:string" />
+	<xsd:attribute name="value" type="xsd:boolean"/>
+</xsd:complexType>
+
+<xsd:complexType name="inputNodes">
+	
+	<xsd:sequence>
+		<xsd:element name="sensorInput" type="sensorInputType" minOccurs="1" maxOccurs="unbounded" />
+		<xsd:element name="crewInput" type="crewInputType" minOccurs="0" maxOccurs="unbounded" />
+	</xsd:sequence>
+	
+	<xsd:attribute name="number" type="nonNegInteger"/>
+</xsd:complexType>
+
+<xsd:complexType name="outputNodes">
+	<xsd:sequence>
+		<xsd:element name="output" type="outputType" minOccurs="1" maxOccurs="unbounded" />
+	</xsd:sequence>
+	<xsd:attribute name="number" type="nonNegInteger"/>
+</xsd:complexType>
+
+<xsd:complexType name="hiddenNodes">
+	<xsd:sequence>
+		<xsd:element name="hidden" type="hiddenType" minOccurs="1" maxOccurs="unbounded" />
+	</xsd:sequence>
+	<xsd:attribute name="number" type="nonNegInteger"/>
+</xsd:complexType>
+
+<xsd:complexType name="neuralnet">
+	<xsd:sequence>
+		<xsd:element name="inputNodes" type="inputNodes" />
+		<xsd:element name="hiddenNodes" type="hiddenNodes" />
+		<xsd:element name="outputNodes" type="outputNodes" />
+	</xsd:sequence>
+</xsd:complexType>
+
+</xsd:schema>

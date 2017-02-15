@@ -1,0 +1,26 @@
+<project name="RiceRL" default="build" basedir=".">
+	<description> Build file for reinforcement learner code developed at Rice University by
+		Theresa Klein, Travis Fischer, and Christy Beatty.
+	</description>
+	<property name="src" location="src"/>
+	<property name="buildDir" location="build"/>
+	<property name="resourcesDir" location="resources"/>
+	<property name="libDir" location="lib"/>
+	<property name="log4jDir" location="${libDir}/log4j" />
+	<property environment="env"/>
+	<target name="init-build">
+		<mkdir dir="${buildDir}"/>
+	</target>
+	<target name="build-disaster" depends="init-build" description="Compiles disaster management RL">
+		<echo message="Compiling disaster management RL"/>
+		<javac srcdir="${src}/edu/rice/biosim/RL/disaster" destdir="${buildDir}" nowarn="yes">
+			<classpath>
+				<pathelement location="${src}"/>
+				<pathelement location="${buildDir}"/>
+				<pathelement path="${env.BIOSIM_HOME}/build"/>
+				<pathelement location="${log4jDir}/log4j.jar"/>
+			</classpath>
+		</javac>
+	</target>
+	<target name="build" depends="build-disaster"/>
+</project>
